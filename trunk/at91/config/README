@@ -1,0 +1,156 @@
+基于CEDN_9200.rar-星光BSP
+修改历史：
+==============================================
+2012.5.3 YuanXG
+==============================================
+AT91RM9200内存空间：
+0x0000 0000~0x0FFF FFFF(256M Bytes)						Internal Memories
+0x1000 0000~0x1FFF FFFF(256M Bytes)						Chip Select 0	SMC or BFC
+0x2000 0000~0x2FFF FFFF(256M Bytes)						Chip Select 1	SMC or SDRAMC
+0x3000 0000~0x3FFF FFFF(256M Bytes)						Chip Select 2	SMC
+0x4000 0000~0x4FFF FFFF(256M Bytes)						Chip Select 3	SMC	NAND Flash/SmartMedia 
+0x5000 0000~0x5FFF FFFF(256M Bytes)						Chip Select 4	SMC	CompactFlash
+0x6000 0000~0x6FFF FFFF(256M Bytes)						Chip Select 5	SMC	CompactFlash
+0x7000 0000~0x7FFF FFFF(256M Bytes)						Chip Select 6	SMC	CompactFlash
+0x8000 0000~0x8FFF FFFF(256M Bytes)						Chip Select 7	SMC
+0x9000 0000~0xEFFF FFFF(6 x 256M Bytes,1,536 bytes)		Undefined(Abort)
+0xF000 0000~0xFFFF FFFF(256M Bytes)						Peripherals
+	0xF000 0000~0xFFF9 FFFF									Reserved
+AT91C_IO_PHYS_BASE->
+	0xFFFA 0000~0xFFFA 3FFF(16K Bytes)						Timer/Counter 0, 1 and 2
+	0xFFFA 4000~0xFFFA 7FFF(16K Bytes)						Timer/Counter 3, 4 and 5
+	0xFFFA 8000~0xFFFA FFFF									Reserved
+	0xFFFB 0000~0xFFFB 3FFF(16K Bytes)						USB Device Port
+	0xFFFB 4000~0xFFFB 7FFF(16K Bytes)						Multimedia Card Interface
+	0xFFFB 8000~0xFFFB BFFF(16K Bytes)						Two-Wire Interface
+	0xFFFB C000~0xFFFB FFFF(16K Bytes)						Ethernet MAC
+	0xFFFC 0000~0xFFFC 3FFF(16K Bytes)						USART0 
+	0xFFFC 4000~0xFFFC 7FFF(16K Bytes)						USART1 
+	0xFFFC 8000~0xFFFC BFFF(16K Bytes)						USART2 
+	0xFFFC C000~0xFFFC FFFF(16K Bytes)						USART3 
+	0xFFFD 0000~0xFFFD 3FFF(16K Bytes)						SSC0
+	0xFFFD 4000~0xFFFD 7FFF(16K Bytes)						SSC1
+	0xFFFD 8000~0xFFFD BFFF(16K Bytes)						SSC2
+	0xFFFD C000~0xFFFD FFFF									Reserved
+	0xFFFE 0000~0xFFFE 3FFF(16K Bytes)						SPI
+	0xFFFE 4000~0xFFFE FFFF									Reserved
+	0xFFFF F000~0xFFFF F1FF(512 bytes/128 registers)		Advanced Interrupt Controller
+	0xFFFF F200~0xFFFF F3FF(512 bytes/128 registers)		Debug Unit
+	0xFFFF F400~0xFFFF F5FF(512 bytes/128 registers)		PIO Controller A
+	0xFFFF F600~0xFFFF F7FF(512 bytes/128 registers)		PIO Controller B
+	0xFFFF F800~0xFFFF F9FF(512 bytes/128 registers)		PIO Controller C
+	0xFFFF FA00~0xFFFF FBFF(256 bytes/64 registers)			PIO Controller D
+	0xFFFF FC00~0xFFFF FCFF(256 bytes/64 registers)			Power Management Controller
+	0xFFFF FD00~0xFFFF FDFF(256 bytes/64 registers)			Real-time Clock
+	0xFFFF FF00~0xFFFF FFFF(256 bytes/64 registers)			Memory Controller
+
+本BSP中，所用到的Memory Map配置如下．
+00000000~00004000 (16K) 	Internal RAM   (exception table)
+
+00100000~00020000 (128K)	Internal ROM
+
+10000000~10800000 (8M)		External ROM/nor Flash
+
+20000000~24000000 (64M) 	External RAM   (程序代码和数据)
+
+70000000~0x72000000			ADC、DIP、DOP CARD
+			
+FFFA0000~FFFFFFFF			CPU peripherals area
+
+==============================================
+2012.4.11 YuanXG
+==============================================
+ROM_TEXT_ADRS: ROM基址
+ROM_SIZE: ROM空间大小
+RAM_LOW_ADRS: vxWorks镜像运行地址
+RAM_HIGH_ADRS: BootROM内存运行地址，一般为sysMemTop() - 0x100000
+
+ROM = Nor Flash: 10000000~107fffff 8M
+RAM = SDRAM: 20000000~23ffffff 64M
+
+
+==============================================
+1、修改BSP的makefile，使之与config.h保持一致
+==============================================
+ROM_TEXT_ADRS	= 24000000 # ROM entry address
+ROM_SIZE	= 00100000 # number of bytes of ROM space
+
+RAM_LOW_ADRS	= 00001000 # RAM text/data address
+RAM_HIGH_ADRS	= 00600000 # RAM text/data address
+==============================================
+==>
+==============================================
+ROM_TEXT_ADRS	= 0x10000000 # ROM entry address
+ROM_SIZE	= 0x00200000 # 2M number of bytes of ROM space
+
+RAM_LOW_ADRS	= 20001000 # VxWorks image entry point
+RAM_HIGH_ADRS	= 23E00000 # RAM address for ROM boot
+==============================================
+2、修改config.h的引导行
+==============================================
+#  define DEFAULT_BOOT_LINE \
+    "eth(0,0) host:/tornado2.2/target/config/at91rm9200/vxWorks " \
+    "h=172.20.1.6 e=172.20.9.19:ffffff00 u=target tn=at91rm9200dk"
+==============================================
+==>
+==============================================
+#  define DEFAULT_BOOT_LINE \
+    "eth(0,0) host:vxWorks " \
+    "h=192.168.1.100 e=192.168.1.101:ffffff00 u=at91 pw=at91 tn=at91rm9200dk"
+==============================================	
+主机地址和目标机地址要根据实际进行配置
+	
+启动ftp服务器时，要添加用户：
+用户名:at91
+密码:at91
+权限目录:D:\Tornado2.2\target\proj\at91rm9200\default_dk
+
+3、修改config.h的内存配置
+SDRAM 64M, NorFlash 8M
+==============================================
+#else
+#define LOCAL_MEM_LOCAL_ADRS	0x20000000	/* fixed at zero */
+#define LOCAL_MEM_BUS_ADRS	0x20000000	/* fixed at zero */
+#define LOCAL_MEM_SIZE		0x02000000	/* 8 Mbytes */
+#endif
+==============================================
+==>
+==============================================
+#else
+#define LOCAL_MEM_LOCAL_ADRS	0x20000000	/* fixed at zero */
+#define LOCAL_MEM_BUS_ADRS	0x20000000	/* fixed at zero */
+#define LOCAL_MEM_SIZE		0x04000000	/* 64 Mbytes */<==
+#endif
+==============================================
+==============================================
+#define ROM_BASE_ADRS       AT91_FLASH_BASE     /* base of Flash/EPROM */
+#define ROM_TEXT_ADRS       ROM_BASE_ADRS  /* code start addr in ROM */
+#define ROM_SIZE            0x00200000     /* size of ROM holding VxWorks=2M*/
+
+#define ROM_COPY_SIZE       ROM_SIZE
+#define ROM_SIZE_TOTAL      0x02000000	/* total size of ROM */
+==============================================
+==>
+==============================================
+#define ROM_BASE_ADRS       AT91_FLASH_BASE     /* base of Flash/EPROM */
+#define ROM_TEXT_ADRS       ROM_BASE_ADRS  /* code start addr in ROM */
+#define ROM_SIZE            0x00200000     /* size of ROM holding VxWorks=2M*/
+
+#define ROM_COPY_SIZE       ROM_SIZE
+#define ROM_SIZE_TOTAL      0x00800000	/* 8 Mbytes, total size of ROM */<==
+==============================================
+==============================================
+==============================================
+#else
+#  define RAM_LOW_ADRS		0x20001000	/* VxWorks image entry point */
+#  define RAM_HIGH_ADRS		0x20600000	/* RAM address for ROM boot */
+#endif
+==============================================
+==>
+==============================================
+#else
+#  define RAM_LOW_ADRS		0x20001000	/* VxWorks image entry point */
+#  define RAM_HIGH_ADRS		0x23E00000	/* RAM address for ROM boot */
+#endif
+==============================================
+
