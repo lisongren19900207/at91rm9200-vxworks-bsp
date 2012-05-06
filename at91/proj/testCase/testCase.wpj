@@ -1,0 +1,218 @@
+Document file - DO NOT EDIT
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_AR
+ararm
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_ARCHIVE
+$(PRJ_DIR)/ARMARCH4gnu/testCase.a
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_AS
+ccarm
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_CC
+ccarm
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_CC_ARCH_SPEC
+-mapcs-32 -mlittle-endian -march=armv4
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_CFLAGS
+-g \
+	-mapcs-32 \
+	-mlittle-endian \
+	-march=armv4 \
+	-ansi \
+	-fno-builtin \
+	-DARMEL \
+	-I. \
+	-I$(WIND_BASE)/target/h/ \
+	-DCPU=ARMARCH4 \
+	-DTOOL_FAMILY=gnu \
+	-DTOOL=gnu
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_CFLAGS_AS
+-g \
+	-mapcs-32 \
+	-mlittle-endian \
+	-march=armv4 \
+	-ansi \
+	-fno-builtin \
+	-P \
+	-xassembler-with-cpp \
+	-I. \
+	-I$(WIND_BASE)/target/h/ \
+	-DCPU=ARMARCH4 \
+	-DTOOL_FAMILY=gnu \
+	-DTOOL=gnu
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_CPP
+ccarm -E -P
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_HEX_FLAGS
+
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_LD
+ldarm
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_LDFLAGS
+-X -EL -N
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_LD_PARTIAL
+ccarm -r -nostdlib -Wl,-X -Wl,-EL
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_LD_PARTIAL_FLAGS
+-X -EL -r
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_NM
+nmarm -g
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_OPTION_DEFINE_MACRO
+-D
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_OPTION_DEPEND
+-M -w
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_OPTION_GENERATE_DEPENDENCY_FILE
+-MD
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_OPTION_INCLUDE_DIR
+-I
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_OPTION_LANG_C
+-xc
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_OPTION_UNDEFINE_MACRO
+-U
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_SIZE
+sizearm
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_MACRO_TOOL_FAMILY
+gnu
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_RO_DEPEND_PATH
+{$(WIND_BASE)/target/h/} \
+	{$(WIND_BASE)/target/src/} \
+	{$(WIND_BASE)/target/config/}
+<END>
+
+<BEGIN> BUILD_ARMARCH4gnu_TC
+::tc_ARMARCH4gnu
+<END>
+
+<BEGIN> BUILD__CURRENT
+ARMARCH4gnu
+<END>
+
+<BEGIN> BUILD__LIST
+ARMARCH4gnu
+<END>
+
+<BEGIN> CORE_INFO_TYPE
+::prj_vxApp
+<END>
+
+<BEGIN> CORE_INFO_VERSION
+2.2
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/adcTest.c_objects
+adcTest.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/adcTest.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/extIrqTest.c_objects
+extIrqTest.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/extIrqTest.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/pioTest.c_objects
+pioTest.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/pioTest.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/posixTimer.c_objects
+posixTimer.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/posixTimer.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/posixTimerStartDemo.c_objects
+posixTimerStartDemo.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/posixTimerStartDemo.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/timer.c_objects
+timer.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/timer.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/uartTest.c_objects
+uartTest.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/uartTest.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/windDemo.c_objects
+windDemo.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/windDemo.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> PROJECT_FILES
+$(PRJ_DIR)/timer.c \
+	$(PRJ_DIR)/windDemo.c \
+	$(PRJ_DIR)/posixTimer.c \
+	$(PRJ_DIR)/posixTimerStartDemo.c \
+	$(PRJ_DIR)/uartTest.c \
+	$(PRJ_DIR)/pioTest.c \
+	$(PRJ_DIR)/adcTest.c \
+	$(PRJ_DIR)/extIrqTest.c
+<END>
+
+<BEGIN> userComments
+<Enter description here>
+<END>
+
